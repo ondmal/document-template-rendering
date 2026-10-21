@@ -1,0 +1,7 @@
+title: Document Template Rendering Service
+description: A stateless service that fills Word templates with request data and renders them as signable PDF/A-2u documents.
+defaults:
+  - scope:
+      path: ""
+    values:
+      title: Document Template Rendering Service

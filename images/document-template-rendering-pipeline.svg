@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 644" width="1100" height="644" role="img" aria-labelledby="title desc">
+  <title id="title">Generation pipeline</title>
+  <desc id="desc">Three lanes: consuming service, template rendering service, template storage. The consumer sends a request with a template name and data. The service resolves the name to a version and a localised file, loads the template from its cache or from template storage, fills in loops, tags, conditional sections and barcodes, renders PDF/A-2u, adds signature fields where the template marks a signatory if the request asks for them, and streams the PDF back; any step can instead end in a problem response. A consumer can send the template inline instead, which skips resolving and loading. Document features plug in at three points: fix-ups on the raw template before it is loaded, loops and barcodes while filling, and signature fields on the rendered PDF. The consumer receives the PDF or the error.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2f4f8"/>
+      <stop offset="1" stop-color="#e6eaf1"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4f6bff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#4f6bff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ours" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f7ff"/>
+      <stop offset="1" stop-color="#eaefff"/>
+    </linearGradient>
+    <linearGradient id="oursStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f6bff"/>
+      <stop offset="1" stop-color="#9b5cff"/>
+    </linearGradient>
+    <linearGradient id="ext" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fbfcfe"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#0f172a" fill-opacity="0.08"/>
+    </pattern>
+    <filter id="glow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-25%" width="120%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#1e293b" flood-opacity="0.08"/>
+    </filter>
+    <marker id="aAccent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6d84ff"/>
+    </marker>
+    <marker id="aMuted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a7b2c6"/>
+    </marker>
+    <style>
+      text { font-family: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2.2px; fill: #4f6bff; }
+      .eyebrowS{ font-size: 10px; font-weight: 700; letter-spacing: 1.6px; fill: #6b7cc4; }
+      .phase   { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #3546b3; }
+      .phaseE  { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #64748b; }
+      .h1      { font-size: 21px; font-weight: 600; fill: #0f172a; }
+      .ttl     { font-size: 13px; font-weight: 600; fill: #111827; }
+      .sub     { font-size: 11px; fill: #64748b; }
+      .subO    { font-size: 11px; fill: #4a58b8; }
+      .chip    { font-size: 11px; font-weight: 500; fill: #3546b3; }
+      .note    { font-size: 12px; fill: #475569; }
+      .noteB   { font-size: 12px; font-weight: 600; fill: #0f172a; }
+      .legend  { font-size: 11.5px; fill: #64748b; }
+      .okT     { font-size: 12.5px; font-weight: 600; fill: #15803d; }
+      .endT    { font-size: 12.5px; font-weight: 600; fill: #b42318; }
+      .panel   { fill: #ffffff; fill-opacity: 0.5; stroke: #dfe4ef; stroke-width: 1; }
+      .panelO  { fill: #4f6bff; fill-opacity: 0.04; stroke: #c3cdfa; stroke-width: 1; }
+      .cardO   { fill: url(#ours); stroke: url(#oursStroke); stroke-width: 1.5; filter: url(#shadow); }
+      .cardE   { fill: url(#ext); stroke: #cfd6e3; stroke-width: 1.2; filter: url(#shadow); }
+      .cardOk  { fill: #f0fdf4; stroke: #4ade80; stroke-width: 1.4; filter: url(#shadow); }
+      .cardEnd { fill: #fef3f2; stroke: #f59ea0; stroke-width: 1.4; filter: url(#shadow); }
+      .icOk    { fill: none; stroke: #16a34a; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .icEnd   { fill: none; stroke: #e5484d; stroke-width: 1.8; stroke-linecap: round; }
+      .lnO     { fill: none; stroke: #6d84ff; stroke-width: 1.8; }
+      .lnE     { fill: none; stroke: #a7b2c6; stroke-width: 1.5; }
+      .lnAlt   { fill: none; stroke: #a7b2c6; stroke-width: 1.5; stroke-dasharray: 5 4; }
+      .hook    { fill: none; stroke: #9aa9ff; stroke-width: 1.3; stroke-dasharray: 3 3; }
+      .featBg  { fill: #ffffff; fill-opacity: 0.6; stroke: #9aa9ff; stroke-width: 1; stroke-dasharray: 4 3; }
+      .chipBg  { fill: #4f6bff; fill-opacity: 0.10; stroke: #4f6bff; stroke-opacity: 0.40; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1100" height="644" rx="22" fill="url(#bg)"/>
+  <rect width="1100" height="644" rx="22" fill="url(#dots)"/>
+  <ellipse cx="600" cy="300" rx="480" ry="200" fill="url(#halo)"/>
+
+  <!-- Header -->
+  <text class="eyebrow" x="44" y="44">GENERATION PIPELINE · LOGICAL FLOW</text>
+  <text class="h1" x="44" y="72">From a template name and data to a signable PDF, in one request</text>
+  <circle cx="866" cy="52" r="5" fill="url(#oursStroke)"/>
+  <text class="legend" x="878" y="56">built in this project</text>
+  <circle cx="1004" cy="52" r="5" fill="#c3ccdb"/>
+  <text class="legend" x="1016" y="56">external</text>
+
+  <!-- Lanes -->
+  <rect class="panel" x="40" y="104" width="1020" height="100" rx="14"/>
+  <text class="phaseE" x="58" y="150">CONSUMING</text>
+  <text class="phaseE" x="58" y="166">SERVICE</text>
+
+  <rect class="panelO" x="40" y="218" width="1020" height="190" rx="14"/>
+  <text class="phase" x="58" y="306">RENDERING</text>
+  <text class="phase" x="58" y="322">SERVICE</text>
+
+  <rect class="panel" x="40" y="422" width="1020" height="100" rx="14"/>
+  <text class="phaseE" x="58" y="468">TEMPLATE</text>
+  <text class="phaseE" x="58" y="484">STORAGE</text>
+
+  <!-- ===== Vertical connectors ===== -->
+  <path class="lnE" d="M241 186 V236" marker-end="url(#aMuted)"/>
+  <path class="lnAlt" d="M456 154 H539 V236" marker-end="url(#aMuted)"/>
+  <path class="lnO" d="M986 236 V190" marker-end="url(#aAccent)"/>
+  <path class="lnE" d="M241 440 V328" marker-end="url(#aMuted)"/>
+  <path class="lnE" d="M390 440 V328" marker-end="url(#aMuted)"/>
+
+  <!-- ===== Service lane: one step after another ===== -->
+  <path class="lnO" d="M307 282 H321" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M456 282 H470" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M605 282 H619" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M754 282 H768" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M903 259 H917" marker-end="url(#aAccent)"/>
+
+  <!-- ===== Document features: where they plug in ===== -->
+  <path class="lnO" d="M440 352 V328" style="stroke-dasharray:3 3" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M539 352 V328" style="stroke-dasharray:3 3" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M837 352 V328" style="stroke-dasharray:3 3" marker-end="url(#aAccent)"/>
+  <rect class="featBg" x="420" y="352" width="483" height="48" rx="12"/>
+  <rect class="chipBg" x="428" y="366" width="58" height="20" rx="10"/>
+  <text class="chip" x="457" y="380" text-anchor="middle">fix-ups</text>
+  <rect class="chipBg" x="494" y="366" width="46" height="20" rx="10"/>
+  <text class="chip" x="517" y="380" text-anchor="middle">loops</text>
+  <rect class="chipBg" x="546" y="366" width="66" height="20" rx="10"/>
+  <text class="chip" x="579" y="380" text-anchor="middle">barcodes</text>
+  <text class="eyebrowS" x="765" y="373" text-anchor="middle">DOCUMENT FEATURES</text>
+  <text class="sub" x="765" y="389" text-anchor="middle">plug in at three points · one folder each</text>
+
+  <!-- ===== Consumer lane ===== -->
+  <rect class="cardE" x="176" y="122" width="131" height="64" rx="11"/>
+  <text class="ttl" x="188" y="148">Request by name</text>
+  <text class="sub" x="188" y="168">template name + data</text>
+
+  <rect class="cardE" x="325" y="122" width="131" height="64" rx="11"/>
+  <text class="ttl" x="337" y="148">Request inline</text>
+  <text class="sub" x="337" y="168">template + data</text>
+
+  <rect class="cardE" x="921" y="122" width="131" height="64" rx="11"/>
+  <text class="ttl" x="933" y="148">Receives result</text>
+  <text class="sub" x="933" y="168">PDF or problem</text>
+
+  <!-- ===== Service lane ===== -->
+  <rect class="cardO" x="176" y="240" width="131" height="84" rx="12"/>
+  <text class="ttl" x="188" y="266">Resolve</text>
+  <text class="subO" x="188" y="286">name → version →</text>
+  <text class="subO" x="188" y="302">localised file</text>
+
+  <rect class="cardO" x="325" y="240" width="131" height="84" rx="12"/>
+  <text class="ttl" x="337" y="266">Load</text>
+  <text class="subO" x="337" y="286">from the cache,</text>
+  <text class="subO" x="337" y="302">else from storage</text>
+
+  <rect x="474" y="240" width="131" height="84" rx="12" filter="url(#glow)" style="fill:none;stroke:#6d8dff;stroke-width:6;stroke-opacity:0.2"/>
+  <rect class="cardO" x="474" y="240" width="131" height="84" rx="12"/>
+  <text class="ttl" x="486" y="266">Fill</text>
+  <text class="subO" x="486" y="286">loops · tags ·</text>
+  <text class="subO" x="486" y="302">sections · barcodes</text>
+
+  <rect class="cardO" x="623" y="240" width="131" height="84" rx="12"/>
+  <text class="ttl" x="635" y="266">Render</text>
+  <text class="subO" x="635" y="286">PDF/A-2u</text>
+  <text class="subO" x="635" y="302">PDF 2.0</text>
+
+  <rect class="cardO" x="772" y="240" width="131" height="84" rx="12"/>
+  <text class="ttl" x="784" y="266">Signature fields</text>
+  <text class="subO" x="784" y="286">where the template</text>
+  <text class="subO" x="784" y="302">marks a signatory</text>
+
+  <!-- outcomes -->
+  <rect class="cardOk" x="921" y="240" width="131" height="38" rx="10"/>
+  <path class="icOk" d="M933 259 L938 264 L947 254"/>
+  <text class="okT" x="955" y="264">PDF streamed</text>
+
+  <rect class="cardEnd" x="921" y="286" width="131" height="38" rx="10"/>
+  <path class="icEnd" d="M935 300 L944 309 M944 300 L935 309"/>
+  <text class="endT" x="955" y="310">Problem</text>
+
+  <!-- ===== Storage lane ===== -->
+  <rect class="cardE" x="176" y="440" width="280" height="64" rx="11"/>
+  <text class="ttl" x="188" y="466">Templates and their configuration</text>
+  <text class="sub" x="188" y="486">versioned per template by its maintainers</text>
+
+  <!-- notes -->
+  <text class="note" x="550" y="558" text-anchor="middle"><tspan class="noteB">Inline template</tspan> — the consumer sends the .docx with the data; resolving and loading are skipped · <tspan class="noteB">Signature fields</tspan> only when requested</text>
+  <text class="note" x="550" y="584" text-anchor="middle"><tspan class="noteB">Document features</tspan> — fix-ups on the raw template, loops and barcodes while filling, signature fields on the rendered PDF — independent of the rendering library</text>
+  <text class="note" x="550" y="610" text-anchor="middle"><tspan class="endT">Problem</tspan> — any step can end the request (invalid input, unknown template, storage unavailable, time limit) with an error code and the trace id</text>
+</svg>

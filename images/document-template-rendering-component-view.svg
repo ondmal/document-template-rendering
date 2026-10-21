@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 880" width="1100" height="880" role="img" aria-labelledby="title desc">
+  <title id="title">Component view</title>
+  <desc id="desc">Consuming services call the WebApi host through the internal API gateway. The WebApi host is the composition root, with one vertical slice per endpoint: generate from template, generate from stream, clear the per-pod cache, and health probes. It uses Application and Infrastructure. Application holds the ports, the handlers and validators, a thin domain of value objects and the document features with the engine's contracts, and references no rendering library. Infrastructure implements the ports: template loaders, the caching decorator, the GemBox rendering engine, signature fields on PdfSharp and PdfPig, and a barcode renderer. Infrastructure reads shared template storage; the service exports telemetry to Honeycomb.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2f4f8"/>
+      <stop offset="1" stop-color="#e6eaf1"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4f6bff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#4f6bff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ours" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f7ff"/>
+      <stop offset="1" stop-color="#eaefff"/>
+    </linearGradient>
+    <linearGradient id="oursStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f6bff"/>
+      <stop offset="1" stop-color="#9b5cff"/>
+    </linearGradient>
+    <linearGradient id="ext" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fbfcfe"/>
+    </linearGradient>
+    <linearGradient id="domain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3e9ff"/>
+      <stop offset="1" stop-color="#d6deff"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#0f172a" fill-opacity="0.08"/>
+    </pattern>
+    <filter id="glow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-25%" width="120%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#1e293b" flood-opacity="0.08"/>
+    </filter>
+    <marker id="aAccent" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6d84ff"/>
+    </marker>
+    <marker id="aMuted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a7b2c6"/>
+    </marker>
+    <style>
+      text { font-family: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2.2px; fill: #4f6bff; }
+      .eyebrowS{ font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; fill: #7c8aa5; }
+      .h1      { font-size: 21px; font-weight: 600; fill: #0f172a; }
+      .ttl     { font-size: 14px; font-weight: 600; fill: #111827; }
+      .ttlL    { font-size: 16px; font-weight: 600; fill: #0b1020; }
+      .sub     { font-size: 11.5px; fill: #64748b; }
+      .subO    { font-size: 11.5px; fill: #4a58b8; }
+      .item    { font-size: 12px; fill: #334155; }
+      .itemB   { font-size: 12px; font-weight: 600; fill: #1e293b; }
+      .pill    { font-size: 11px; fill: #475569; }
+      .chip    { font-size: 11px; font-weight: 500; fill: #3546b3; }
+      .legend  { font-size: 11.5px; fill: #64748b; }
+      .tag     { font-size: 12px; font-weight: 600; fill: #3546b3; }
+      .cardO   { fill: url(#ours); stroke: url(#oursStroke); stroke-width: 1.5; filter: url(#shadow); }
+      .cardE   { fill: url(#ext); stroke: #dde3ee; stroke-width: 1.2; filter: url(#shadow); }
+      .glowO   { fill: none; stroke: #6d8dff; stroke-width: 6; stroke-opacity: 0.22; }
+      .tileO   { fill: #4f6bff; fill-opacity: 0.12; }
+      .tileE   { fill: #0f172a; fill-opacity: 0.05; }
+      .icO     { fill: none; stroke: #4f6bff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+      .icE     { fill: none; stroke: #64748b; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+      .lnO     { fill: none; stroke: #6d84ff; stroke-width: 1.8; }
+      .lnE     { fill: none; stroke: #a7b2c6; stroke-width: 1.5; }
+      .pillBg  { fill: #ffffff; stroke: #d6dce8; stroke-width: 1; }
+      .chipBg  { fill: #4f6bff; fill-opacity: 0.08; stroke: #4f6bff; stroke-opacity: 0.35; stroke-width: 1; }
+      .tagBg   { fill: #ffffff; stroke: url(#oursStroke); stroke-width: 1.4; filter: url(#shadow); }
+      .frame   { fill: #ffffff; fill-opacity: 0.45; stroke: url(#oursStroke); stroke-width: 1.5; stroke-dasharray: 7 5; }
+      .ring1   { fill: #ffffff; fill-opacity: 0.85; stroke: #c3cdfa; stroke-width: 1.2; filter: url(#shadow); }
+      .ring3   { fill: url(#domain); stroke: url(#oursStroke); stroke-width: 1.6; filter: url(#shadow); }
+      .dot     { fill: #6d84ff; }
+    </style>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1100" height="880" rx="22" fill="url(#bg)"/>
+  <rect width="1100" height="880" rx="22" fill="url(#dots)"/>
+  <ellipse cx="550" cy="520" rx="460" ry="300" fill="url(#halo)"/>
+
+  <!-- Header -->
+  <text class="eyebrow" x="44" y="48">COMPONENT VIEW</text>
+  <text class="h1" x="44" y="76">One host, a slice per endpoint, the rendering library behind ports</text>
+  <circle cx="842" cy="56" r="5" fill="url(#oursStroke)"/>
+  <text class="legend" x="854" y="60">built in this project</text>
+  <circle cx="985" cy="56" r="5" fill="#c3ccdb"/>
+  <text class="legend" x="997" y="60">external</text>
+
+  <!-- ===== Connectors ===== -->
+  <path class="lnO" d="M535 178 V332" marker-end="url(#aAccent)"/>
+  <rect class="pillBg" x="471" y="230" width="128" height="22" rx="11"/>
+  <text class="pill" x="535" y="245" text-anchor="middle">REST API · via gateway</text>
+
+  <path class="lnO" d="M320 440 V492" marker-end="url(#aAccent)"/>
+  <path class="lnO" d="M780 440 V492" marker-end="url(#aAccent)"/>
+
+  <path class="lnO" d="M596 600 H504" marker-end="url(#aAccent)"/>
+  <rect class="pillBg" x="512" y="589" width="76" height="22" rx="11"/>
+  <text class="pill" x="550" y="604" text-anchor="middle">implements</text>
+
+  <path class="lnE" d="M780 786 V710" marker-end="url(#aMuted)"/>
+  <rect class="pillBg" x="728" y="748" width="104" height="22" rx="11"/>
+  <text class="pill" x="780" y="763" text-anchor="middle">loads templates</text>
+
+  <path class="lnE" d="M320 744 V786" marker-end="url(#aMuted)"/>
+  <rect class="pillBg" x="292" y="752" width="56" height="22" rx="11"/>
+  <text class="pill" x="320" y="767" text-anchor="middle">OTLP</text>
+
+  <!-- ===== External caller ===== -->
+  <rect class="cardE" x="385" y="110" width="300" height="64" rx="12"/>
+  <rect class="tileE" x="399" y="126" width="32" height="32" rx="8"/>
+  <g transform="translate(407 134)">
+    <rect class="icE" x="1" y="5" width="10" height="10" rx="1.5"/>
+    <path class="icE" d="M5 5 V1 H15 V11 H11"/>
+  </g>
+  <text class="ttl" x="443" y="137">Consuming services</text>
+  <text class="sub" x="443" y="156">through the internal API gateway</text>
+
+  <!-- ===== Service frame ===== -->
+  <rect class="frame" x="90" y="300" width="920" height="440" rx="18"/>
+  <rect class="tagBg" x="760" y="287" width="210" height="26" rx="13"/>
+  <text class="tag" x="865" y="304" text-anchor="middle">Template rendering service</text>
+
+  <!-- WebApi host -->
+  <rect class="glowO" x="140" y="336" width="820" height="100" rx="12" filter="url(#glow)"/>
+  <rect class="cardO" x="140" y="336" width="820" height="100" rx="12"/>
+  <rect class="tileO" x="156" y="352" width="32" height="32" rx="8"/>
+  <g transform="translate(164 360)">
+    <circle class="icO" cx="8" cy="8" r="6.5"/>
+    <path class="icO" d="M1.5 8 H14.5 M8 1.5 C5.5 4 5.5 12 8 14.5 C10.5 12 10.5 4 8 1.5"/>
+  </g>
+  <text class="ttl" x="202" y="363">WebApi host</text>
+  <text class="subO" x="202" y="381">composition root · one vertical slice per endpoint</text>
+  <rect class="chipBg" x="202" y="398" width="150" height="22" rx="11"/>
+  <text class="chip" x="277" y="413" text-anchor="middle">generate from template</text>
+  <rect class="chipBg" x="360" y="398" width="144" height="22" rx="11"/>
+  <text class="chip" x="432" y="413" text-anchor="middle">generate from stream</text>
+  <rect class="chipBg" x="512" y="398" width="140" height="22" rx="11"/>
+  <text class="chip" x="582" y="413" text-anchor="middle">clear cache · per pod</text>
+  <rect class="chipBg" x="660" y="398" width="102" height="22" rx="11"/>
+  <text class="chip" x="711" y="413" text-anchor="middle">health probes</text>
+
+  <!-- Core captions -->
+  <text class="eyebrowS" x="340" y="471">THIN LAYERED CORE</text>
+  <text class="eyebrowS" x="760" y="471" text-anchor="end">ARCHITECTURE-TESTED</text>
+
+  <!-- Application -->
+  <rect class="ring3" x="140" y="496" width="360" height="210" rx="14"/>
+  <rect class="tileO" x="156" y="512" width="32" height="32" rx="8"/>
+  <g transform="translate(164 520)">
+    <path class="icO" d="M2 3 H14 M2 8 H10 M2 13 H12"/>
+  </g>
+  <text class="ttl" x="202" y="525">Application</text>
+  <text class="subO" x="202" y="542">references no rendering library</text>
+  <circle class="dot" cx="166" cy="580" r="2.5"/>
+  <text class="item" x="176" y="584"><tspan class="itemB">Ports</tspan> — resolve · load · transform · sign</text>
+  <circle class="dot" cx="166" cy="606" r="2.5"/>
+  <text class="item" x="176" y="610"><tspan class="itemB">Handlers</tspan> and validators, per slice</text>
+  <circle class="dot" cx="166" cy="632" r="2.5"/>
+  <text class="item" x="176" y="636"><tspan class="itemB">Thin domain</tspan> — value objects only</text>
+  <circle class="dot" cx="166" cy="658" r="2.5"/>
+  <text class="item" x="176" y="662"><tspan class="itemB">Document features</tspan> + engine contracts</text>
+
+  <!-- Infrastructure -->
+  <rect class="ring1" x="600" y="496" width="360" height="210" rx="14"/>
+  <rect class="tileO" x="616" y="512" width="32" height="32" rx="8"/>
+  <g transform="translate(624 520)">
+    <path class="icO" d="M5 1 V5 M11 1 V5 M3 5 H13 V8 C13 11 10.8 13 8 13 C5.2 13 3 11 3 8 Z M8 13 V15"/>
+  </g>
+  <text class="ttl" x="662" y="525">Infrastructure</text>
+  <text class="sub" x="662" y="542">implements the ports</text>
+  <circle class="dot" cx="626" cy="572" r="2.5"/>
+  <text class="item" x="636" y="576"><tspan class="itemB">Template loaders</tspan> — storage · local disk</text>
+  <circle class="dot" cx="626" cy="597" r="2.5"/>
+  <text class="item" x="636" y="601"><tspan class="itemB">Caching decorator</tspan> — per pod, TTL</text>
+  <circle class="dot" cx="626" cy="622" r="2.5"/>
+  <text class="item" x="636" y="626"><tspan class="itemB">Rendering engine</tspan> — GemBox.Document</text>
+  <circle class="dot" cx="626" cy="647" r="2.5"/>
+  <text class="item" x="636" y="651"><tspan class="itemB">Signature fields</tspan> — PdfSharp + PdfPig</text>
+  <circle class="dot" cx="626" cy="672" r="2.5"/>
+  <text class="item" x="636" y="676"><tspan class="itemB">Barcode renderer</tspan></text>
+
+  <!-- ===== Dependencies ===== -->
+  <rect class="cardE" x="200" y="790" width="240" height="64" rx="12"/>
+  <rect class="tileE" x="214" y="806" width="32" height="32" rx="8"/>
+  <g transform="translate(222 814)">
+    <path class="icE" d="M1 8 H4 L6 3 L9 13 L11 8 H15"/>
+  </g>
+  <text class="ttl" x="258" y="817">Honeycomb</text>
+  <text class="sub" x="258" y="836">traces · metrics · logs</text>
+
+  <rect class="cardE" x="660" y="790" width="240" height="64" rx="12"/>
+  <rect class="tileE" x="674" y="806" width="32" height="32" rx="8"/>
+  <g transform="translate(682 814)">
+    <path class="icE" d="M1 4 V13 H15 V5.5 H8 L6.5 3 H1 Z"/>
+  </g>
+  <text class="ttl" x="718" y="817">Template storage</text>
+  <text class="sub" x="718" y="836">Azure Files · workload identity</text>
+</svg>
